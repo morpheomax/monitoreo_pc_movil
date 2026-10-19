@@ -416,3 +416,14 @@ Estado final: Samsung en Panel, conectado a la Mac, tema oscuro, pantalla activa
   Confirmada app instalada0.7.0/code2009/API24. Conexión rápida física Windows
   y cierre por aplicación completa permanecen pendientes; el teléfono ya está
   actualizado para usar ambos computadores.
+
+
+## Sesión 15 — Separación de repositorios (2026-10-18)
+
+- El usuario corrigió el destino: repositorio oficial morpheomax/monitoreo_pc_movil.
+  Se extrae exclusivamente el historial de pc-monitor/ y se publica en raíz.
+- Enlaces y recetas Windows/Mac ajustados al nuevo repositorio, sin subcarpeta.
+  Workflow trasladado a raíz; ZIP regenerados con las guías corregidas.
+- APK0.7.0 y agente0.4.0 sin cambios de lógica; no requiere reinstalar Android.
+- D-019 sustituye D-017. Tras verificar entrega nueva, se retirará la integración
+  móvil del árbol actual de monitoreo_Fitflow conservando Fitflow y su historial.

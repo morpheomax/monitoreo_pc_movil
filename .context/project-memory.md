@@ -1,5 +1,6 @@
 # Memoria del proyecto
 
+Repositorio vigente: https://github.com/morpheomax/monitoreo_pc_movil (código en raíz).
 Actualizado: 2026-10-18, app 0.7.0 / paquete agente 0.4.0. Consultar README, decisiones
 y última entrada de PROGRESS. Uso básico Windows confirmado por el usuario.
 La cronología inferior es histórica; el incremento 0.7.0 al final es el vigente.
@@ -221,3 +222,13 @@ forzado y no puede prometer guardar cambios. Nueva entrega APK0.7.0/ZIP0.4.0.
   Confirmada app instalada0.7.0/code2009/API24. Conexión rápida física Windows
   y cierre por aplicación completa permanecen pendientes; el teléfono ya está
   actualizado para usar ambos computadores.
+
+
+## Repositorio definitivo — D-019
+
+Usuario corrigió destino a morpheomax/monitoreo_pc_movil. PC Monitor está en raíz,
+con historial extraído solo de pc-monitor/. Workflow y recetas de clonación/ZIP
+adaptados. Las referencias anteriores a monitoreo_Fitflow son históricas.
+Retirar integración móvil del árbol actual del repositorio anterior solo después
+de verificar la nueva entrega; conservar Fitflow, su historial y su pausa.
+Sin cambios al APK/funciones. La carpeta local de desarrollo usará el remoto nuevo.

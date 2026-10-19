@@ -236,3 +236,17 @@
 - **Límites:** el listener temporal se cierra al vencer o detener el lanzador;
   se retira su reenvío al detenerlo. Reparar USB conserva el token actual sin
   volver a emitirlo. No cambia la política de cierre de procesos ni sesiones.
+
+
+## D-019 — Repositorio propio para PC Monitor
+
+- **Fecha:** 2026-10-18. Aceptada por corrección explícita del usuario; sustituye D-017.
+- **Decisión:** publicar PC Monitor en morpheomax/monitoreo_pc_movil, con fuentes,
+  APK, paquetes, guías y workflow directamente en la raíz. Extraer únicamente
+  el historial de pc-monitor/ para no arrastrar fuentes de Fitflow.
+- **Limpieza:** tras verificar la nueva entrega, retirar pc-monitor/, su workflow
+  y sus referencias actuales de monitoreo_Fitflow, restaurando su árbol anterior
+  a la integración móvil. Conservar el historial remoto; sin force push.
+- **Consecuencia:** actualizar enlaces, rutas de clonación, ZIP/guías y CI al
+  directorio raíz. No cambia el APK instalado ni el funcionamiento USB. Los
+  registros históricos inferiores documentan la ubicación antigua, ya reemplazada.

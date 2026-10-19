@@ -6,17 +6,17 @@ El mismo APK sirve para conectarlo después a Windows.
 
 ## Obtener desde GitHub
 
-La aplicación Android está en `pc-monitor/` del repositorio
-https://github.com/morpheomax/monitoreo_Fitflow . Puedes descargar los paquetes
+La aplicación Android está en la raíz del repositorio
+https://github.com/morpheomax/monitoreo_pc_movil . Puedes descargar los paquetes
 versionados de esa carpeta `dist`, usar Code → Download ZIP o clonar:
 
 ```bash
-git clone https://github.com/morpheomax/monitoreo_Fitflow.git
-cd monitoreo_Fitflow/pc-monitor
+git clone https://github.com/morpheomax/monitoreo_pc_movil.git
+cd monitoreo_pc_movil
 ```
 
 Si clonas, coloca `platform-tools` junto a `start.py` y usa el APK de `dist/` al
-instalarlo. El monitor de escritorio de la raíz mantiene su instalación propia.
+instalarlo. La instalación del agente parte desde la raíz del repositorio.
 
 ## Acceso: token temporal, sin usuario/contraseña
 

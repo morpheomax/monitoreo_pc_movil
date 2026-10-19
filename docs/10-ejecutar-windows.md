@@ -6,14 +6,13 @@ rápida nueva requiere validación allí; pruebas de desarrollo en Mac + Samsung
 
 ## 0. Obtener el proyecto desde GitHub
 
-PC Monitor Android se encuentra en **pc-monitor/** del repositorio
-[morpheomax/monitoreo_Fitflow](https://github.com/morpheomax/monitoreo_Fitflow).
-El programa Fitflow de la raíz tiene otra instalación; aquí usarás `start.py`
-dentro de `pc-monitor`, sin instalar sus dependencias de CRM/Playwright.
+PC Monitor Android se encuentra en la **raíz** del repositorio
+[morpheomax/monitoreo_pc_movil](https://github.com/morpheomax/monitoreo_pc_movil).
+Usa `start.py` de esa carpeta; no necesitas herramientas de desarrollo para usarlo.
 
 ### Opción A — paquetes listos, sin Git
 
-1. Abre [pc-monitor/dist](https://github.com/morpheomax/monitoreo_Fitflow/tree/main/pc-monitor/dist).
+1. Abre [dist](https://github.com/morpheomax/monitoreo_pc_movil/tree/main/dist).
 2. Descarga `pcmonitor-agent-0.4.0.zip`, `pcmonitor-android-0.7.0-arm64.apk` y
    `SHA256SUMS.txt`. En cada archivo usa **Download raw file**, no Guardar página.
 3. Extrae el ZIP para obtener `C:\PCMonitor` y copia el APK junto a `start.py`.
@@ -25,14 +24,14 @@ Instala [Git para Windows](https://git-scm.com/downloads/win). Desde PowerShell,
 en la carpeta donde quieras guardar el repositorio:
 
 ```powershell
-git clone https://github.com/morpheomax/monitoreo_Fitflow.git
-Set-Location .\monitoreo_Fitflow\pc-monitor
+git clone https://github.com/morpheomax/monitoreo_pc_movil.git
+Set-Location .\monitoreo_pc_movil
 ```
 
 Si el repositorio es privado, inicia sesión en GitHub cuando Git lo solicite;
 esa autorización sirve para descargar código, **no es la credencial de PC Monitor**.
 También puedes usar **Code → Download ZIP**, extraerlo y abrir
-`monitoreo_Fitflow-main\pc-monitor` sin instalar Git.
+`monitoreo_pc_movil-main` sin instalar Git.
 
 En estas variantes trabaja desde esa carpeta en lugar de `C:\PCMonitor` y coloca
 `platform-tools` junto a `start.py`. No necesitas descomprimir además el ZIP del
@@ -225,7 +224,7 @@ vuelven a la vista anterior sin reconectar. El agente 0.4.0 sigue siendo compati
 ## Actualizar desde GitHub
 
 Si clonaste, termina la grabación y detén el agente antes de ejecutar desde
-`pc-monitor`:
+`monitoreo_pc_movil`:
 
 ```powershell
 git pull --ff-only

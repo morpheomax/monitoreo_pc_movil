@@ -6,23 +6,21 @@ y macOS; cada computador ejecuta su propio agente y conserva su historial.
 
 ## Descargar desde GitHub
 
-Repositorio: [morpheomax/monitoreo_Fitflow](https://github.com/morpheomax/monitoreo_Fitflow).
-**Esta aplicación está en `pc-monitor/`**. El monitor de escritorio Fitflow que
-aparece en la raíz es otro componente; sus comandos de Playwright no se necesitan
-para usar el panel Android.
+Repositorio oficial: [morpheomax/monitoreo_pc_movil](https://github.com/morpheomax/monitoreo_pc_movil).
+El código de PC Monitor está directamente en la raíz de este repositorio.
 
 Elige una forma de obtener PC Monitor:
 
-- **Uso habitual:** abre [los entregables](https://github.com/morpheomax/monitoreo_Fitflow/tree/main/pc-monitor/dist)
+- **Uso habitual:** abre [los entregables](https://github.com/morpheomax/monitoreo_pc_movil/tree/main/dist)
   y descarga `pcmonitor-agent-0.4.0.zip` y `pcmonitor-android-0.7.0-arm64.apk`
   (en la página de cada archivo, **Download raw file**). Descomprime el agente
   y continúa desde el paso 1 de esta guía. No hace falta instalar Git.
 - **Código completo:** en GitHub usa **Code → Download ZIP** y abre la carpeta
-  `monitoreo_Fitflow-main/pc-monitor`, o clona con Git:
+  `monitoreo_pc_movil-main`, o clona con Git:
 
 ```powershell
-git clone https://github.com/morpheomax/monitoreo_Fitflow.git
-Set-Location .\monitoreo_Fitflow\pc-monitor
+git clone https://github.com/morpheomax/monitoreo_pc_movil.git
+Set-Location .\monitoreo_pc_movil
 ```
 
 Desde esa carpeta, coloca `platform-tools` junto a `start.py`. El APK está en
@@ -372,8 +370,8 @@ Se usa localhost por USB; Wi-Fi/QR/TLS todavía no están habilitados.
 
 ## Estado y desarrollo
 
-GitHub Actions: [agente, arranque y paquetes aprobados en Windows y Mac](https://github.com/morpheomax/monitoreo_Fitflow/actions/runs/39186437103)
-para la revisión `5ed6537` (24 tests de agente, 9 de arranque y paquetes). El usuario confirmó instalación y funcionamiento básico en Windows; faltan la
+GitHub Actions: [comprobaciones de Windows y Mac](https://github.com/morpheomax/monitoreo_pc_movil/actions/workflows/pc-monitor.yml).
+El workflow verifica 24 tests de agente, 9 de arranque y los paquetes. El usuario confirmó instalación y funcionamiento básico en Windows; faltan la
 conexión rápida nueva y las pruebas prolongadas.
 
 Probado con Mac y Samsung físico: panel horizontal, temas, gráficas, sesiones,
@@ -425,5 +423,5 @@ En Mac: `python3 -m venv agent/.venv` y
 | [Seguridad](docs/05-seguridad.md) | Autenticación, permisos y acciones |
 | [Sesiones](docs/08-sesiones-e-historial.md) | SQLite, informes y retención |
 
-El código se publica en `pc-monitor/` del repositorio indicado arriba. Al cerrar
+El código se publica en la raíz del repositorio indicado arriba. Al cerrar
 trabajo se actualizan README, contexto y PROGRESS; las decisiones se registran aparte.
