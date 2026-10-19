@@ -250,3 +250,14 @@
 - **Consecuencia:** actualizar enlaces, rutas de clonación, ZIP/guías y CI al
   directorio raíz. No cambia el APK instalado ni el funcionamiento USB. Los
   registros históricos inferiores documentan la ubicación antigua, ya reemplazada.
+
+
+## D-020 — Vaciado completo del repositorio anterior
+
+- **Fecha:** 2026-10-18. Orden posterior explícita del usuario; ajusta la limpieza de D-019.
+- **Decisión:** retirar todos los archivos actuales de main en monitoreo_Fitflow,
+  incluyendo Fitflow, para que el usuario cargue allí el proyecto correspondiente.
+- **Resultado:** commit29a4d50 publicado y árbol vacío verificado; historial
+  conservado, sin force push. monitoreo_pc_movil permanece intacto.
+- **Consecuencia:** no restaurar automáticamente el contenido anterior ni
+  interpretar la preservación inicial de Fitflow como el estado final vigente.

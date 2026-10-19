@@ -5,6 +5,15 @@ Actualizado: 2026-10-18, app 0.7.0 / paquete agente 0.4.0. Consultar README, dec
 y última entrada de PROGRESS. Uso básico Windows confirmado por el usuario.
 La cronología inferior es histórica; el incremento 0.7.0 al final es el vigente.
 
+## Estado vigente al cerrar el 18 de octubre de 2026
+
+**Desarrollo pausado**: usuario probará del19 al25 de octubre y luego dará feedback.
+Resumen completo y orden de retoma: [retomar.md](retomar.md).
+Repositorio anterior monitoreo_Fitflow finalmente vaciado en29a4d50 por instrucción
+posterior: main sin archivos, historial conservado. No restaurarlo automáticamente.
+PC Monitor permanece únicamente en monitoreo_pc_movil; workspace y remoto correctos.
+Cierre completo por aplicación pendiente; no confundir con cierre individual existente.
+
 ## Grafo operativo
 
 ```text
@@ -17,8 +26,9 @@ La cronología inferior es histórica; el incremento 0.7.0 al final es el vigent
   ├─ reparar enlace -> [--repair-usb / Repair USB Windows.cmd]
   ├─ implementado -> [métricas + procesos + sesiones + informe + CSV]
   ├─ gráficas -> [CPU/RAM + disco + red / 1 y 5 minutos / consulta táctil]
-  ├─ siguiente -> [Windows físico + prueba prolongada + Power BI]
-  └─ después -> [acciones seguras / sugerencias / instaladores / Wi-Fi]
+  ├─ estado -> [pausa / prueba usuario 19-25 octubre 2026]
+  ├─ siguiente -> [feedback + validación Windows nueva + sesiones prolongadas]
+  └─ después -> [cierre aplicación completa / sugerencias / instaladores / Wi-Fi]
 ```
 
 ## Estado implementado

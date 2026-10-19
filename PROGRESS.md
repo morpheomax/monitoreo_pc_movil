@@ -437,3 +437,20 @@ Estado final: Samsung en Panel, conectado a la Mac, tema oscuro, pantalla activa
   móviles actuales. Historial conservado; no se hizo force push.
 - Carpeta local monitorpc inicializada con el historial móvil extraído y remoto
   correcto, rama main siguiendo origin/main; entornos/builds/datos conservados.
+
+
+## Sesión 16 — Cierre y semana de prueba (2026-10-18)
+
+- Usuario pidió cerrar por hoy, guardar contexto completo y retomar tras probar
+  la app del19 al25 de octubre. Desarrollo en pausa, sin nuevas funciones ni
+  orden de detener agentes/grabaciones existentes. Sin recordatorio programado.
+- Registrado resultado posterior a la separación: por nueva instrucción explícita
+  se vació TODO main de monitoreo_Fitflow en29a4d50, historial conservado.
+  PC Monitor no cambió; sigue en monitoreo_pc_movil. D-020 corrige el estado final.
+- Nueva .context/retomar.md resume entrega, repositorios, funcionalidades, pruebas,
+  límites y primera acción. README/contexto enlazan retoma y guía de prueba semanal.
+- Próximo: feedback del usuario, correcciones reproducibles y después cierre de
+  aplicación completa desde tarjeta, aún pendiente de implementación segura.
+- Sin cambios de lógica/APK/paquetes. Última evidencia:29 Flutter/analyze limpio,
+ 24 agente/9 arranque y CI39186773883 aprobada. Esta sesión solo verifica
+  coherencia de paquetes y documentación; no repite pruebas ni usa el teléfono.
