@@ -232,3 +232,10 @@ adaptados. Las referencias anteriores a monitoreo_Fitflow son históricas.
 Retirar integración móvil del árbol actual del repositorio anterior solo después
 de verificar la nueva entrega; conservar Fitflow, su historial y su pausa.
 Sin cambios al APK/funciones. La carpeta local de desarrollo usará el remoto nuevo.
+
+Migración completada: fef5ae6 publicado en nuevo repositorio; CI39186773883
+aprobada Windows/macOS (24 agente/9 arranque/paquetes). Descarga nueva verificada.
+Repositorio anterior limpio en b5a1280, árbol idéntico a168aec5 antes de integración.
+Historial anterior conservado. Este workspace ya tiene Git y origin apunta a
+monitoreo_pc_movil; main sigue origin/main. Usar directamente este checkout
+para próximos cambios; ya no hace falta integrar bajo pc-monitor/ en otro clon.

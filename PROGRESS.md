@@ -425,5 +425,15 @@ Estado final: Samsung en Panel, conectado a la Mac, tema oscuro, pantalla activa
 - Enlaces y recetas Windows/Mac ajustados al nuevo repositorio, sin subcarpeta.
   Workflow trasladado a raíz; ZIP regenerados con las guías corregidas.
 - APK0.7.0 y agente0.4.0 sin cambios de lógica; no requiere reinstalar Android.
-- D-019 sustituye D-017. Tras verificar entrega nueva, se retirará la integración
+- D-019 sustituye D-017. Tras verificar la entrega nueva, se retiró la integración
   móvil del árbol actual de monitoreo_Fitflow conservando Fitflow y su historial.
+
+- Nuevo repositorio publicado fef5ae6, descargado desde GitHub y comprobado con
+  package_release --check y start.py --help, sin SDK ni entorno del Mac. Workflow
+ 39186773883 aprobado Windows/macOS: 24 tests agente, 9 arranque y paquetes.
+  https://github.com/morpheomax/monitoreo_pc_movil/actions/runs/39186773883
+- Limpieza anterior publicada b5a1280. Su árbol coincide exactamente con168aec5
+  (antes de PC Monitor): Fitflow intacto, sin subcarpeta/workflow/referencias
+  móviles actuales. Historial conservado; no se hizo force push.
+- Carpeta local monitorpc inicializada con el historial móvil extraído y remoto
+  correcto, rama main siguiendo origin/main; entornos/builds/datos conservados.
