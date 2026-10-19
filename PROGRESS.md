@@ -454,3 +454,8 @@ Estado final: Samsung en Panel, conectado a la Mac, tema oscuro, pantalla activa
 - Sin cambios de lógica/APK/paquetes. Última evidencia:29 Flutter/analyze limpio,
  24 agente/9 arranque y CI39186773883 aprobada. Esta sesión solo verifica
   coherencia de paquetes y documentación; no repite pruebas ni usa el teléfono.
+
+- Confirmación final del usuario: todos los registros, contexto, código y próximas
+  publicaciones de este proyecto se mantienen exclusivamente en
+  https://github.com/morpheomax/monitoreo_pc_movil.git . Remoto origin verificado;
+  referencias a repositorios anteriores son solo históricas, sin uso operativo.

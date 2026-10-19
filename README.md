@@ -370,6 +370,8 @@ Se usa localhost por USB; Wi-Fi/QR/TLS todavía no están habilitados.
 
 ## Estado y desarrollo
 
+Único repositorio para código, documentación, contexto, avances y futuras publicaciones: https://github.com/morpheomax/monitoreo_pc_movil.git . No usar otros repositorios para este proyecto; las menciones anteriores solo documentan la migración histórica.
+
 **Cierre del 18 de octubre de 2026:** desarrollo en pausa mientras el usuario
 prueba la app del **19 al 25 de octubre**. Retomar con sus observaciones, sin
 implementar mejoras nuevas antes de revisar esa experiencia. Contexto vigente:

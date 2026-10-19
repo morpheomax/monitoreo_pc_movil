@@ -2,6 +2,8 @@
 
 ## Punto de partida
 
+Único repositorio para código, documentación, contexto, avances y futuras publicaciones: https://github.com/morpheomax/monitoreo_pc_movil.git . No usar otros repositorios para este proyecto; las menciones anteriores solo documentan la migración histórica.
+
 - Desarrollo en pausa a petición del usuario. Probará la app del 19 al 25 de
   octubre de 2026 y luego compartirá su experiencia. No hay recordatorio programado.
 - Workspace: `/Users/maximilianosandoval/Documents/Innext_Solutions/appmoviles/monitorpc`.

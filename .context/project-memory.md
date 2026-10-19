@@ -1,5 +1,7 @@
 # Memoria del proyecto
 
+Único repositorio para código, documentación, contexto, avances y futuras publicaciones: https://github.com/morpheomax/monitoreo_pc_movil.git . No usar otros repositorios para este proyecto; las menciones anteriores solo documentan la migración histórica.
+
 Repositorio vigente: https://github.com/morpheomax/monitoreo_pc_movil (código en raíz).
 Actualizado: 2026-10-18, app 0.7.0 / paquete agente 0.4.0. Consultar README, decisiones
 y última entrada de PROGRESS. Uso básico Windows confirmado por el usuario.
