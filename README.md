@@ -372,8 +372,8 @@ Se usa localhost por USB; Wi-Fi/QR/TLS todavía no están habilitados.
 
 ## Estado y desarrollo
 
-GitHub Actions: [agente, arranque y paquetes aprobados en Windows y Mac](https://github.com/morpheomax/monitoreo_Fitflow/actions/runs/39180195390)
-para la revisión `d8780b0`. El usuario confirmó instalación y funcionamiento básico en Windows; faltan la
+GitHub Actions: [agente, arranque y paquetes aprobados en Windows y Mac](https://github.com/morpheomax/monitoreo_Fitflow/actions/runs/39186437103)
+para la revisión `5ed6537` (24 tests de agente, 9 de arranque y paquetes). El usuario confirmó instalación y funcionamiento básico en Windows; faltan la
 conexión rápida nueva y las pruebas prolongadas.
 
 Probado con Mac y Samsung físico: panel horizontal, temas, gráficas, sesiones,

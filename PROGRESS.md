@@ -409,3 +409,10 @@ Estado final: Samsung en Panel, conectado a la Mac, tema oscuro, pantalla activa
   App0.7.0+9 instalada; Samsung conectado con métricas reales, sin grabación.
 - La prueba de cancelación física usó credencial desechable: no envió acciones
   ni reemplazó la conexión real. Agente anterior reiniciado sin perder sesiones.
+
+- Publicado 5ed6537 en main. GitHub Actions39186437103 aprobado en Windows y
+  macOS: 24 tests agente, 9 arranque y verificación de fuentes/guías/CRC/SHA-256.
+  https://github.com/morpheomax/monitoreo_Fitflow/actions/runs/39186437103
+  Confirmada app instalada0.7.0/code2009/API24. Conexión rápida física Windows
+  y cierre por aplicación completa permanecen pendientes; el teléfono ya está
+  actualizado para usar ambos computadores.
