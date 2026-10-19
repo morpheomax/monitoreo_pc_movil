@@ -182,3 +182,10 @@ prematura de identidad al arrancar Python framework en el fixture; corregida con
 señal ready común para ambos tests reales. No se debilita ProcessPolicy.
 La copia local monitorpc es independiente del Git monorepo: para próximos pushes,
 clonar morpheomax/monitoreo_Fitflow e integrar bajo pc-monitor/ conservando raíz.
+
+- Verificación final GitHub: run39180195390 / commitd8780b0 completó con éxito
+  windows-latest y macos-latest (24 tests agente, 5 arranque y coherencia de
+  entregables en cada SO). Evidencia: https://github.com/morpheomax/monitoreo_Fitflow/actions/runs/39180195390
+- Descarga limpia mediante git archive: APK/ZIP/guías correctos, package_release
+  --check y start.py --help ejecutados sin app/build ni venv de Mac. APK instalado
+  0.6.0+8 en Samsung. Panel final conectado, oscuro y sin grabación activa.

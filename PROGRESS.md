@@ -372,3 +372,10 @@ Estado final: Samsung en Panel, conectado a la Mac, tema oscuro, pantalla activa
   PID/ruta/creación, evitando el salto de ejecutable del Python framework de Mac.
   Protecciones intactas. 24 tests agente pasan tras ajuste. Acciones oficiales
   actualizadas a checkout v5/setup-python v6 (revisiones fijadas, Node24).
+
+- Verificación final GitHub: run39180195390 / commitd8780b0 completó con éxito
+  windows-latest y macos-latest (24 tests agente, 5 arranque y coherencia de
+  entregables en cada SO). Evidencia: https://github.com/morpheomax/monitoreo_Fitflow/actions/runs/39180195390
+- Descarga limpia mediante git archive: APK/ZIP/guías correctos, package_release
+  --check y start.py --help ejecutados sin app/build ni venv de Mac. APK instalado
+  0.6.0+8 en Samsung. Panel final conectado, oscuro y sin grabación activa.

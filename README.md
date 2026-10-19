@@ -361,6 +361,10 @@ Se usa localhost por USB; Wi-Fi/QR/TLS todavía no están habilitados.
 
 ## Estado y desarrollo
 
+GitHub Actions: [agente, arranque y paquetes aprobados en Windows y Mac](https://github.com/morpheomax/monitoreo_Fitflow/actions/runs/39180195390)
+para la revisión `d8780b0`. La prueba física USB en un Windows del usuario sigue
+pendiente; estos tests no reemplazan una sesión real con el teléfono.
+
 Probado con Mac y Samsung físico: panel horizontal, temas, gráficas, sesiones,
 informes/CSV, reconexión y cierre por PID con protección. **Windows físico,
 sesiones de 1–2 horas y consumo prolongado siguen pendientes**. El paquete
