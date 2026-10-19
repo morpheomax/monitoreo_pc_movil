@@ -175,3 +175,10 @@ Code→Download ZIP o git clone, carpeta correcta, instalaciónAPK, token y actu
 .gitignore permite solo entregables vigentes, no builds/venv/SDK/claves/datos.
 tools/package_release.py regenera/verifica fuentes, guías, CRC y SHA-256 desde
 cualquier SO. Flutter de desarrollo validado 3.47.6. Windows físico aún pendiente.
+
+Publicación inicial confirmada: f80f370 y c8dce8a en main. CI Windows del run
+39179879743 pasó agente/arranque/verificación de paquetes. CI Mac detectó captura
+prematura de identidad al arrancar Python framework en el fixture; corregida con
+señal ready común para ambos tests reales. No se debilita ProcessPolicy.
+La copia local monitorpc es independiente del Git monorepo: para próximos pushes,
+clonar morpheomax/monitoreo_Fitflow e integrar bajo pc-monitor/ conservando raíz.

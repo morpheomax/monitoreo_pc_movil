@@ -1,6 +1,3 @@
-import asyncio
-import os
-import sys
 import time
 import unittest
 from unittest.mock import Mock, patch
@@ -9,6 +6,7 @@ import psutil
 
 from actions.processes import ActionError, ProcessActions, ProcessPolicy
 from history.store import SessionStore
+from process_fixture import start_worker
 
 
 def policy(system="Darwin"):
@@ -136,7 +134,7 @@ class ActionsTest(unittest.IsolatedAsyncioTestCase):
         self.process.kill.assert_not_called()
 
     async def test_real_disposable_child_and_session_audit(self):
-        child = psutil.Popen([sys.executable, "-c", "import time; time.sleep(60)"])
+        child = await start_worker()
         store = SessionStore()
         session = store.start()
         actions = ProcessActions("secret", ProcessPolicy(), store.record_action)

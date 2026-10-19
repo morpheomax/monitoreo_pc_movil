@@ -1,7 +1,5 @@
 import asyncio
 import json
-import sys
-import psutil
 import tempfile
 import time
 from pathlib import Path
@@ -13,6 +11,7 @@ import websockets
 from history.store import SessionStore
 from server import CAPABILITIES, MonitorServer
 from test_history import snapshot
+from process_fixture import start_worker
 
 
 class AuthenticationTest(unittest.IsolatedAsyncioTestCase):
@@ -86,7 +85,7 @@ class ServerIntegrationTest(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(Path(exported["export_path"]).joinpath("samples.csv").is_file())
 
     async def test_process_close_requires_authorization_and_confirmation(self):
-        child = psutil.Popen([sys.executable, "-c", "import time; time.sleep(60)"])
+        child = await start_worker()
         identity = {"pid": child.pid, "exe": child.exe(), "create_time": child.create_time()}
         try:
             async with await self.connect() as socket:
@@ -94,7 +93,7 @@ class ServerIntegrationTest(unittest.IsolatedAsyncioTestCase):
                     await socket.send(json.dumps({"v": 1, "type": "process_prepare", "id": "prepare",
                                                  "token": token, "process": identity}))
                     prepared = await self.until(socket, "ack")
-                    self.assertEqual(prepared["ok"], token == "secret")
+                    self.assertEqual(prepared["ok"], token == "secret", prepared.get("message"))
                 await socket.send(json.dumps({"v": 1, "type": "process_terminate", "id": "cancel",
                                              "token": "secret", "ticket": prepared["ticket"], "confirmed": False}))
                 self.assertFalse((await self.until(socket, "ack"))["ok"])

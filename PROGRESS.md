@@ -363,3 +363,12 @@ Estado final: Samsung en Panel, conectado a la Mac, tema oscuro, pantalla activa
   tools/package_release.py con modo --check (fuentes/guías, CRC, SHA-256).
 - Próximo hito operativo sigue siendo Windows físico y sesión prolongada. Las
   pruebas automatizadas y Mac no sustituyen esa validación con teléfono.
+
+- Publicados f80f370 (PC Monitor) y c8dce8a (guías/CI) en main del repositorio
+  indicado. Verificado remoto. GitHub Actions 39179879743: Windows completó
+  agente/arranque/paquetes correctamente; macOS detectó carrera de arranque en
+  el fixture del proceso desechable, no en la política de cierre.
+- Fixture común process_fixture.start_worker espera señal ready antes de capturar
+  PID/ruta/creación, evitando el salto de ejecutable del Python framework de Mac.
+  Protecciones intactas. 24 tests agente pasan tras ajuste. Acciones oficiales
+  actualizadas a checkout v5/setup-python v6 (revisiones fijadas, Node24).
