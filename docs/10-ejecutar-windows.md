@@ -1,8 +1,8 @@
 # PC Monitor en Windows — instalación y uso
 
-App Android **0.6.0**, agente **0.3.0**. El mismo teléfono sirve para Windows y
-Mac. Windows físico sigue pendiente de validación; las pruebas registradas son
-Mac + Samsung. No necesitas Flutter, Android Studio ni un emulador para usarlo.
+App Android **0.7.0**, agente **0.4.0**. El mismo teléfono sirve para Windows y
+Mac. El usuario confirmó instalación y funcionamiento básico en Windows. La conexión
+rápida nueva requiere validación allí; pruebas de desarrollo en Mac + Samsung. No necesitas Flutter, Android Studio ni un emulador para usarlo.
 
 ## 0. Obtener el proyecto desde GitHub
 
@@ -14,7 +14,7 @@ dentro de `pc-monitor`, sin instalar sus dependencias de CRM/Playwright.
 ### Opción A — paquetes listos, sin Git
 
 1. Abre [pc-monitor/dist](https://github.com/morpheomax/monitoreo_Fitflow/tree/main/pc-monitor/dist).
-2. Descarga `pcmonitor-agent-0.3.0.zip`, `pcmonitor-android-0.6.0-arm64.apk` y
+2. Descarga `pcmonitor-agent-0.4.0.zip`, `pcmonitor-android-0.7.0-arm64.apk` y
    `SHA256SUMS.txt`. En cada archivo usa **Download raw file**, no Guardar página.
 3. Extrae el ZIP para obtener `C:\PCMonitor` y copia el APK junto a `start.py`.
 4. Continúa en **1. Preparar Windows**; no vuelvas a descargar el mismo ZIP.
@@ -39,12 +39,21 @@ En estas variantes trabaja desde esa carpeta en lugar de `C:\PCMonitor` y coloca
 agente. El APK ya está dentro de `dist`; el comando del paso 3 será:
 
 ```powershell
-.\platform-tools\adb.exe install -r .\dist\pcmonitor-android-0.6.0-arm64.apk
+.\platform-tools\adb.exe install -r .\dist\pcmonitor-android-0.7.0-arm64.apk
 ```
 
 ## Credencial de conexión: no hay usuario ni contraseña
 
-PC Monitor pide **Token del computador**. El lanzador genera ese token al iniciar
+Con app 0.7.0 y lanzador 0.4.0, el computador abre Android y transfiere el token
+por USB: revisa **nombre del equipo y sistema operativo**, y pulsa **Conectar**.
+Cancelar conserva la conexión anterior. Actualiza APK y paquete del agente.
+La entrega es local, de un solo uso y vence a los 90 s; no guarda credenciales.
+Si no aparece o venció, puedes usar la conexión manual siguiente. La autorización
+de depuración USB se mantiene; no se pide administrador para usar el monitor.
+Puedes instalar Python solo para tu usuario y usar una carpeta en Documentos.
+El controlador USB, cuando es necesario, puede requerir administrador una vez.
+
+En modo manual, PC Monitor pide **Token del computador**. El lanzador genera ese token al iniciar
 el agente y lo muestra junto a la URL. No hay cuenta que registrar, usuario
 predeterminado ni clave de Windows que introducir en la app.
 
@@ -61,14 +70,14 @@ ni en archivos compartidos. **Grabar sesión** es opcional y solo inicia histori
 
 1. Instala [Python para Windows](https://www.python.org/downloads/windows/),
    **3.11 o posterior**, con pip y el lanzador `py`.
-2. Descomprime `pcmonitor-agent-0.3.0.zip` (común Windows/Mac) o
-   `pcmonitor-windows-agent-0.3.0.zip`. Basta uno. Deja la carpeta **PCMonitor**
+2. Descomprime `pcmonitor-agent-0.4.0.zip` (común Windows/Mac) o
+   `pcmonitor-windows-agent-0.4.0.zip`. Basta uno. Deja la carpeta **PCMonitor**
    que viene dentro en `C:\PCMonitor`, en disco local.
 3. Descarga [Android Platform-Tools para Windows](https://developer.android.com/tools/releases/platform-tools).
 4. Extrae su carpeta completa `platform-tools` dentro de `C:\PCMonitor`.
    Debe existir `C:\PCMonitor\platform-tools\adb.exe`; conserva las DLL y demás
    archivos. El lanzador lo detecta sin configurar PATH.
-5. Copia `pcmonitor-android-0.6.0-arm64.apk` junto a `start.py` si debes instalar
+5. Copia `pcmonitor-android-0.7.0-arm64.apk` junto a `start.py` si debes instalar
    o actualizar Android. El APK se entrega por separado del ZIP del agente.
 6. Si Windows no reconoce el Samsung, instala el
    [controlador USB oficial](https://developer.samsung.com/android-usb-driver).
@@ -88,7 +97,7 @@ C:\PCMonitor\
   platform-tools\
     adb.exe
     ...
-  pcmonitor-android-0.6.0-arm64.apk
+  pcmonitor-android-0.7.0-arm64.apk
 ```
 
 No copies `.venv` desde la Mac. Se crea un entorno Windows automáticamente; la
@@ -112,14 +121,14 @@ Debe aparecer **Diagnóstico USB correcto**. Si solo tienes `python`, comprueba
 `python --version` (3.11+) y usa `python start.py --check`; el lanzador admite esa
 alternativa. [Preparación USB oficial](https://developer.android.com/studio/run/device).
 
-## 3. Instalar Android — omitir si ya tienes 0.6.0
+## 3. Instalar Android — omitir si ya tienes 0.7.0
 
 El APK entregado es ARM64/API 24+; está probado en Samsung SM-A156M. En PowerShell,
 con USB autorizado y desde `C:\PCMonitor`:
 
 ```powershell
 .\platform-tools\adb.exe devices
-.\platform-tools\adb.exe install -r .\pcmonitor-android-0.6.0-arm64.apk
+.\platform-tools\adb.exe install -r .\pcmonitor-android-0.7.0-arm64.apk
 ```
 
 El dispositivo debe figurar como **device** y la instalación terminar en
@@ -135,9 +144,10 @@ usa un APK de la misma firma; no desinstales a ciegas.
 2. Abre **Start Windows.cmd** o ejecuta `py -3 start.py` en PowerShell.
 3. Espera la preparación automática y el mensaje **PC Monitor escuchando**.
    Conserva abierta la ventana; ahí están URL y token.
-4. Abre PC Monitor en Android, en horizontal. En **Panel**, copia el valor de
-   **Token:** al campo **Token del computador**. URL normal: `ws://127.0.0.1:8765`.
-5. Pulsa **Conectar**. Comprueba nombre del Windows, **Conectado** y CPU/RAM
+4. La app abre **Conectar por USB**: revisa el nombre del Windows y su sistema,
+   y pulsa **Conectar**. No necesitas escribir el token. Si no aparece, usa el
+   token de la ventana en Panel; URL normal: `ws://127.0.0.1:8765`.
+5. Comprueba nombre del Windows, **Conectado** y CPU/RAM
    actualizándose. No se solicita usuario ni contraseña adicional.
 
 Al reiniciar el agente, copia el token nuevo. La app no guarda credenciales en
@@ -196,7 +206,7 @@ py -3 start.py --adb "C:\Android\platform-tools\adb.exe"
 | Teléfono unauthorized / no detectado | Desbloquear, autorizar, revisar cable/puerto y controlador USB. |
 | Varios dispositivos | Usar `py -3 start.py --serial IDENTIFICADOR`. |
 | Reconectando tras quitar el cable | Volver a conectar; abrir **Repair USB Windows.cmd** sin cerrar el agente. Conserva token y grabación. |
-| Cierre deshabilitado | Actualizar agente a 0.3.0; confirmar conexión y que el proceso no esté protegido. |
+| Cierre deshabilitado | Actualizar agente a 0.4.0; confirmar conexión y que el proceso no esté protegido. |
 | Otro agente usa el historial | Detener la instancia anterior; no borrar SQLite. |
 | Puerto ocupado | Detener la otra instancia o usar `--port 8766` y cambiar la URL Android a ese puerto. |
 
@@ -204,13 +214,13 @@ Para actualizar el agente: terminar grabación, detenerlo y sustituir sus fuente
 por el paquete nuevo. Conservar `%LOCALAPPDATA%\PCMonitor`. Android se actualiza
 con el nuevo APK y `adb install -r`; Python/Platform-Tools no se reinstalan cada vez.
 Wi-Fi, QR, sugerencias y sensores avanzados siguen pendientes. Lo ausente se
-muestra como —. Esta guía no sustituye la validación física pendiente de Windows.
+muestra como —. Siguen pendientes la conexión rápida nueva, sesiones prolongadas y cierres específicos en Windows.
 
-## Gráficas ampliadas — app 0.6.0
+## Gráficas ampliadas — app 0.7.0
 
 Toca la gráfica del Panel o cualquiera de Gráficas para ampliarla. Mantiene datos
 en vivo y selector 1/5 min; toca/desliza para consultar valores. X fija o Atrás
-vuelven a la vista anterior sin reconectar. El agente 0.3.0 sigue siendo compatible.
+vuelven a la vista anterior sin reconectar. El agente 0.4.0 sigue siendo compatible.
 
 ## Actualizar desde GitHub
 

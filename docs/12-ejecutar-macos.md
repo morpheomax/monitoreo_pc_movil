@@ -1,6 +1,6 @@
 # PC Monitor en Mac — instalación y uso
 
-App Android **0.6.0**, agente **0.3.0**. El computador ejecuta el agente; el
+App Android **0.7.0**, agente **0.4.0**. El computador ejecuta el agente; el
 Android muestra los datos por USB. Probado en Mac + Samsung SM-A156M físico.
 El mismo APK sirve para conectarlo después a Windows.
 
@@ -20,6 +20,13 @@ instalarlo. El monitor de escritorio de la raíz mantiene su instalación propia
 
 ## Acceso: token temporal, sin usuario/contraseña
 
+Con app 0.7.0 y lanzador 0.4.0, Android recibe el token por USB y se abre
+**Conectar por USB**. Comprueba nombre del Mac y sistema operativo; pulsa
+**Conectar**. Cancelar conserva tu conexión anterior. Actualiza APK y paquete.
+La entrega local vence a los 90 s y sirve una sola vez; no se guarda el token.
+Si no aparece o venció, usa la conexión manual de abajo. `--manual-connection`
+inicia sin abrir el teléfono. Autorizar depuración USB sigue siendo necesario.
+
 Abre **Start Mac.command** o ejecuta `python3 start.py`. El lanzador genera y
 muestra una URL y **Token:**. Copia ese token al campo **Token del computador**
 en Android. No uses la contraseña del Mac, Apple ID ni PIN del teléfono.
@@ -38,12 +45,12 @@ reales en README, capturas compartidas ni archivos del proyecto.
 
 1. Comprueba `python3 --version`. Si no tienes **3.11 o posterior con pip**,
    instala [Python para macOS](https://www.python.org/downloads/macos/).
-2. Descomprime `pcmonitor-agent-0.3.0.zip`. Deja su carpeta `PCMonitor` en
+2. Descomprime `pcmonitor-agent-0.4.0.zip`. Deja su carpeta `PCMonitor` en
    `~/Documents/PCMonitor`. También puedes usar el repositorio directamente.
 3. Descarga [Android Platform-Tools para Mac](https://developer.android.com/tools/releases/platform-tools).
    Extrae la carpeta completa `platform-tools` junto a `start.py`. Si ya tienes
    el SDK en `~/Library/Android/sdk`, el lanzador también busca ADB allí.
-4. Copia `pcmonitor-android-0.6.0-arm64.apk` junto a `start.py` si debes instalar
+4. Copia `pcmonitor-android-0.7.0-arm64.apk` junto a `start.py` si debes instalar
    o actualizar Android. Se entrega separado del ZIP del agente.
 
 ```text
@@ -61,7 +68,7 @@ PCMonitor/
   platform-tools/
     adb
     ...
-  pcmonitor-android-0.6.0-arm64.apk
+  pcmonitor-android-0.7.0-arm64.apk
 ```
 
 Python y Platform-Tools se preparan en el computador. El teléfono solo necesita
@@ -85,20 +92,20 @@ python3 start.py --check
 Debe aparecer **Diagnóstico USB correcto**. macOS no requiere el controlador
 USB del fabricante que puede necesitar Windows. [Preparación oficial Android](https://developer.android.com/studio/run/device).
 
-## 3. Instalar Android — omitir si ya tienes 0.6.0
+## 3. Instalar Android — omitir si ya tienes 0.7.0
 
 APK ARM64/API 24+, probado en Samsung SM-A156M. Desde la carpeta `PCMonitor`,
 con el APK copiado y el teléfono autorizado:
 
 ```bash
 ./platform-tools/adb devices
-./platform-tools/adb install -r ./pcmonitor-android-0.6.0-arm64.apk
+./platform-tools/adb install -r ./pcmonitor-android-0.7.0-arm64.apk
 ```
 
 Si usas el SDK existente:
 
 ```bash
-"$HOME/Library/Android/sdk/platform-tools/adb" install -r ./pcmonitor-android-0.6.0-arm64.apk
+"$HOME/Library/Android/sdk/platform-tools/adb" install -r ./pcmonitor-android-0.7.0-arm64.apk
 ```
 
 `devices` debe mostrar **device** y la instalación **Success**. `-r` conserva
@@ -118,8 +125,9 @@ python3 start.py
 
 3. Espera a **PC Monitor escuchando** y conserva la ventana. El lanzador prepara
    el entorno y el reenvío USB automáticamente; no actives entornos a mano.
-4. Abre PC Monitor en el teléfono, en horizontal. Copia el **Token:** mostrado
-   en el Mac; dirección normal `ws://127.0.0.1:8765`. Pulsa **Conectar**.
+4. Android abre **Conectar por USB**. Revisa nombre del Mac y sistema, y pulsa
+   **Conectar** sin escribir el token. Como alternativa manual, copia **Token:**
+   del Mac y usa `ws://127.0.0.1:8765` en Panel.
 5. Comprueba **Conectado**, el nombre del Mac y CPU/RAM actualizándose.
 
 Si macOS no abre el `.command`, usa la alternativa de Terminal desde la carpeta
@@ -177,7 +185,7 @@ paquete nuevo y conservar `~/Library/Application Support/PCMonitor`. Actualiza
 Android con `adb install -r` del APK nuevo. No reinstales Python/Platform-Tools
 cada vez. Wi-Fi/QR, sugerencias y pruebas prolongadas siguen pendientes.
 
-## Gráficas ampliadas — app 0.6.0
+## Gráficas ampliadas — app 0.7.0
 
 Toca una gráfica para ampliarla con datos en vivo, consulta táctil y selector
 1/5 min. X fija o Atrás regresan al origen sin desconectar. Agente sin cambios.

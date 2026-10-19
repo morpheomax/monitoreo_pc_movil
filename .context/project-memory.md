@@ -1,7 +1,8 @@
 # Memoria del proyecto
 
-Actualizado: 2026-10-18, app 0.6.0 / agente 0.3.0. Consultar también README, decisiones y
-última entrada de PROGRESS. Windows permanece pendiente de prueba física.
+Actualizado: 2026-10-18, app 0.7.0 / paquete agente 0.4.0. Consultar README, decisiones
+y última entrada de PROGRESS. Uso básico Windows confirmado por el usuario.
+La cronología inferior es histórica; el incremento 0.7.0 al final es el vigente.
 
 ## Grafo operativo
 
@@ -189,3 +190,27 @@ clonar morpheomax/monitoreo_Fitflow e integrar bajo pc-monitor/ conservando raí
 - Descarga limpia mediante git archive: APK/ZIP/guías correctos, package_release
   --check y start.py --help ejecutados sin app/build ni venv de Mac. APK instalado
   0.6.0+8 en Samsung. Panel final conectado, oscuro y sin grabación activa.
+
+
+## Conexión rápida USB — 0.7.0 / paquete 0.4.0
+
+El usuario confirmó instalación/uso básico en Windows con el teléfono. No se
+extiende esa evidencia a cierres, consumo prolongado ni la nueva conexión rápida.
+
+start.py abre Android con ADB y un enlace nonce de 256 bits, HTTP solo loopback
+y reverse temporal, una recogida, 90 s, no-store y sin logs de credenciales.
+Intent sin token; el canal nativo consume/elimina el enlace en memoria. App valida
+v1/host literal/puerto/ruta, no sigue redirecciones y limita tamaño/tiempo.
+Confirma equipo/SO antes de conectar; cancelar conserva la conexión actual.
+Sin cuentas, token persistido, elevación ni confianza permanente. Alternativa
+manual y --manual-connection. D-018 ajusta D-007/D-015.
+
+Samsung: APK 0.7.0+9 instalado conservando datos; recepción desde lanzador real
+y conexión con métricas reales sin escribir token. Segunda solicitud cancelada
+conserva el equipo conectado. Pruebas locales: 29 Flutter, analyze limpio, 24
+agente. 9 tests del lanzador pasan: un uso/caducidad/nonce y alternativa manual.
+
+Pendiente: validar el incremento en Windows, sesiones prolongadas y cierre por
+aplicación completa (solicitado, aún no implementado). Esa acción debe conservar
+identidades, protegidos, auditoría y resultado individual; Windows terminate es
+forzado y no puede prometer guardar cambios. Nueva entrega APK0.7.0/ZIP0.4.0.

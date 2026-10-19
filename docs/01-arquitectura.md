@@ -1,6 +1,6 @@
 # Arquitectura
 
-## Flujo implementado (agente 0.3.0 / app 0.6.0)
+## Flujo implementado (agente 0.4.0 / app 0.7.0)
 
 ```text
 Windows / macOS                         Android físico
@@ -21,6 +21,9 @@ ni acceso desde internet. Wi-Fi/QR/TLS y distribución pública son posteriores.
 
 - `start.py`: prepara un entorno por equipo, encuentra ADB y autoriza el flujo
   según el dispositivo USB. `--repair-usb` restaura el reenvío sin reiniciar.
+  Abre Android con un enlace temporal de un uso (nonce), que entrega el token
+  por HTTP loopback/USB durante 90 s. Nombre/SO se confirman en el teléfono;
+  el token no viaja en el Intent ni se persiste. `--manual-connection` lo omite.
 - `pcmonitor/metrics.py`: interfaz común de métricas y agrupación. psutil cubre
   datos base; adaptadores avanzados de temperatura/presión siguen pendientes.
   En Mac los helpers se agrupan por el bundle exterior `.app` cuando su ruta es legible.
@@ -45,6 +48,9 @@ trabajo a otro hilo si hay evidencia de bloqueo y conservar el estado de muestre
 ## App
 
 - `main.dart`: arranque y tema.
+- `connection/usb_pairing.dart`: recepción acotada de credenciales USB, solo
+  loopback literal/v1, sin redirecciones. Canal `pcmonitor/pairing` entrega y
+  elimina el enlace en memoria tanto en apertura fría como con la app abierta.
 - `connection/monitor_controller.dart`: estado observable con ChangeNotifier,
   autenticación, mensajes, solicitudes correlacionadas y conexión cancelable.
 - `models/metric_history.dart`: hasta cinco minutos/650 muestras recibidas,

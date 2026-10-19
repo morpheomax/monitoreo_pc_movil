@@ -128,7 +128,7 @@ class MonitorController extends ChangeNotifier {
         'type': 'hello',
         'token': _token,
         'client': 'android',
-        'app_version': '0.6.0'
+        'app_version': '0.7.0'
       }));
       _handshake = Timer(handshakeTimeout, () => _lost(generation));
     } catch (_) {

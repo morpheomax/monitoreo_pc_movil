@@ -12,7 +12,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-AGENT_VERSION = "0.3.0"
+AGENT_VERSION = "0.4.0"
 
 
 def app_version():

@@ -1,7 +1,7 @@
 # PC Monitor — instalación y uso
 
 El teléfono Android muestra y gestiona procesos del computador conectado por
-USB. **App Android 0.6.0 / agente 0.3.0**. El mismo teléfono sirve para Windows
+USB. **App Android 0.7.0 / agente 0.4.0**. El mismo teléfono sirve para Windows
 y macOS; cada computador ejecuta su propio agente y conserva su historial.
 
 ## Descargar desde GitHub
@@ -14,7 +14,7 @@ para usar el panel Android.
 Elige una forma de obtener PC Monitor:
 
 - **Uso habitual:** abre [los entregables](https://github.com/morpheomax/monitoreo_Fitflow/tree/main/pc-monitor/dist)
-  y descarga `pcmonitor-agent-0.3.0.zip` y `pcmonitor-android-0.6.0-arm64.apk`
+  y descarga `pcmonitor-agent-0.4.0.zip` y `pcmonitor-android-0.7.0-arm64.apk`
   (en la página de cada archivo, **Download raw file**). Descomprime el agente
   y continúa desde el paso 1 de esta guía. No hace falta instalar Git.
 - **Código completo:** en GitHub usa **Code → Download ZIP** y abre la carpeta
@@ -29,7 +29,7 @@ Desde esa carpeta, coloca `platform-tools` junto a `start.py`. El APK está en
 `dist`; para instalarlo desde el clon usa:
 
 ```powershell
-.\platform-tools\adb.exe install -r .\dist\pcmonitor-android-0.6.0-arm64.apk
+.\platform-tools\adb.exe install -r .\dist\pcmonitor-android-0.7.0-arm64.apk
 ```
 
 Prepara primero Python, USB y Platform-Tools según los pasos siguientes.
@@ -42,6 +42,15 @@ Para actualizar un clon: termina la grabación, detén el agente y ejecuta `git 
 **Actualmente no se crea una cuenta ni se pide usuario/contraseña.** La credencial
 es un **token temporal** generado automáticamente en el computador al iniciar
 PC Monitor. No uses tu contraseña de Windows, Mac, Google ni el PIN del teléfono.
+
+**Conexión rápida USB (app 0.7.0 / lanzador 0.4.0):** al iniciar el computador,
+la app se abre y recibe el token sin escribirlo. Revisa el **nombre del equipo** y
+su **sistema operativo**, y pulsa **Conectar**. Cancelar conserva la conexión
+actual. Actualiza tanto el APK como el paquete del agente para usar esta función.
+La autorización de depuración USB de Android sigue siendo necesaria por equipo.
+La entrega es local, de un solo uso y vence a los 90 segundos; no guarda tokens.
+Si vence o la app antigua no la recibe, el token manual continúa disponible.
+`--manual-connection` permite iniciar sin abrir el teléfono.
 
 | Dato | Qué escribir / dónde obtenerlo |
 |---|---|
@@ -72,19 +81,19 @@ equipo. Grabar una sesión es opcional: el monitoreo en vivo funciona sin grabar
 
 | Archivo | Para qué sirve |
 |---|---|
-| [APK Android 0.6.0 ARM64](dist/pcmonitor-android-0.6.0-arm64.apk) | Instalar o actualizar PC Monitor en el teléfono. |
-| [Agente 0.3.0 Windows y Mac](dist/pcmonitor-agent-0.3.0.zip) | Descomprimir en cada computador; incluye lanzadores e instrucciones para ambos sistemas. |
-| [Paquete Windows 0.3.0](dist/pcmonitor-windows-agent-0.3.0.zip) | Alternativa específica de Windows; contiene el mismo agente. Basta elegir uno de los dos ZIP. |
+| [APK Android 0.7.0 ARM64](dist/pcmonitor-android-0.7.0-arm64.apk) | Instalar o actualizar PC Monitor en el teléfono. |
+| [Agente 0.4.0 Windows y Mac](dist/pcmonitor-agent-0.4.0.zip) | Descomprimir en cada computador; incluye lanzadores e instrucciones para ambos sistemas. |
+| [Paquete Windows 0.4.0](dist/pcmonitor-windows-agent-0.4.0.zip) | Alternativa específica de Windows; contiene el mismo agente. Basta elegir uno de los dos ZIP. |
 | [SHA256SUMS.txt](dist/SHA256SUMS.txt) | Comprobar integridad de los paquetes entregados. |
 
-**Tu Samsung ya tiene la app 0.6.0 instalada.** Puedes pasar a preparar el otro
+**Tu Samsung ya tiene la app 0.7.0 instalada.** Puedes pasar a preparar el otro
 computador. Solo repite la instalación Android cuando cambie el APK o uses otro
 teléfono. El APK entregado es para **ARM64, Android 7.0/API 24 o posterior**, probado
 en Samsung SM-A156M. Otros dispositivos requieren la ABI correspondiente.
 
 El agente necesita **Python 3.11 o posterior con pip** y **Android Platform-Tools**.
 La preparación se ha probado en Mac con Python 3.12; se verificaron dependencias
-para Windows/Python 3.11, pero la ejecución física en Windows sigue pendiente.
+para Windows/Python 3.11, pero el usuario confirmó instalación y funcionamiento en Windows. La conexión rápida nueva requiere validación allí.
 No hacen falta Flutter, Android Studio ni emuladores para usar estos paquetes.
 La primera preparación del agente necesita internet; el monitoreo funciona localmente.
 
@@ -168,7 +177,7 @@ PCMonitor/
   platform-tools/                  # descargar para el SO de este computador
     adb.exe                        # Windows, con sus DLL y archivos
     adb                            # Mac, dentro de su propio paquete
-  pcmonitor-android-0.6.0-arm64.apk  # copiar si vas a instalar/actualizar Android
+  pcmonitor-android-0.7.0-arm64.apk  # copiar si vas a instalar/actualizar Android
 ```
 
 Los dos ejecutables ADB de la ilustración son alternativas: usa el paquete de tu
@@ -177,7 +186,7 @@ adecuado en cada computador y prepara dependencias automáticamente.
 
 ## 3. Instalar o actualizar la app Android
 
-Si PC Monitor 0.6.0 ya está instalado en tu Samsung, continúa al paso 4.
+Si PC Monitor 0.7.0 ya está instalado en tu Samsung, continúa al paso 4.
 Para otro teléfono compatible o una actualización, con USB autorizado y el APK
 copiado junto a `start.py`, ejecuta **una** de estas opciones desde `PCMonitor`:
 
@@ -185,14 +194,14 @@ copiado junto a `start.py`, ejecuta **una** de estas opciones desde `PCMonitor`:
 
 ```powershell
 .\platform-tools\adb.exe devices
-.\platform-tools\adb.exe install -r .\pcmonitor-android-0.6.0-arm64.apk
+.\platform-tools\adb.exe install -r .\pcmonitor-android-0.7.0-arm64.apk
 ```
 
 **Mac — Terminal:**
 
 ```bash
 ./platform-tools/adb devices
-./platform-tools/adb install -r ./pcmonitor-android-0.6.0-arm64.apk
+./platform-tools/adb install -r ./pcmonitor-android-0.7.0-arm64.apk
 ```
 
 Si usas el SDK ya instalado en Mac, sustituye `./platform-tools/adb` por
@@ -220,10 +229,12 @@ Referencia de instalación: [Android Debug Bridge](https://developer.android.com
 3. Espera a que termine la preparación y aparezca **PC Monitor escuchando**.
    La primera vez crea `agent/.venv` e instala las dependencias fijadas.
    También configura el reenvío USB. Conserva esa ventana abierta.
-4. En **Panel** del teléfono copia el valor **Token:** de esa ventana al campo
-   **Token del computador**. Revisa la dirección `ws://127.0.0.1:8765`.
-5. Pulsa **Conectar**. Comprueba **Conectado**, el nombre del equipo y CPU/RAM
-   actualizándose. Al cambiar de equipo, desconecta primero y usa su token.
+4. La app se abre en el teléfono. Revisa **nombre del equipo y sistema** en
+   **Conectar por USB**, y pulsa **Conectar**, sin escribir el token.
+5. Comprueba **Conectado**, el nombre del equipo y CPU/RAM actualizándose.
+   Si no aparece la confirmación, usa el campo manual **Token del computador**
+   con el valor de la ventana y `ws://127.0.0.1:8765`. Al reiniciar el agente,
+   vuelve a confirmar la conexión enviada; al reconectar solo el cable usa reparar USB.
 6. Usa **Gráficas**, **Procesos** y **Sesiones**. No hace falta volver a instalar
    Android para pasar de Mac a Windows.
 
@@ -235,7 +246,7 @@ del agente. No tienes que activar entornos virtuales a mano.
 
 ### Panel horizontal
 
-La app Android 0.6.0 mantiene orientación horizontal sin cambiar la rotación del
+La app Android 0.7.0 mantiene orientación horizontal sin cambiar la rotación del
 sistema. El panel reúne seis métricas, barras por núcleo y gráfica CPU/RAM;
 Gráficas muestra CPU/RAM, disco y red simultáneamente. Navegación lateral y
 cabecera compacta con conexión, sesión, pantalla activa y desconexión.
@@ -278,7 +289,7 @@ detener el agente usa **Ctrl+C** en la ventana del computador.
 
 ### Cerrar procesos desde Android
 
-Requiere agente **0.3.0** del paquete actualizado. En **Procesos**, pulsa la **X**
+Requiere agente **0.4.0** del paquete actualizado. En **Procesos**, pulsa la **X**
 de una tarjeta para abrir sus procesos. Busca el PID y la ruta, pulsa su **X**
 y confirma **Finalizar** o **Forzar cierre**. Guarda primero tu trabajo.
 La acción afecta al PID seleccionado; no cierra automáticamente todo el grupo.
@@ -332,7 +343,7 @@ otro sistema. No necesitas reinstalar Python/Platform-Tools en cada ejecución.
 | Hay varios teléfonos | Añade `--serial IDENTIFICADOR` al lanzador. Para instalar APK añade `-s IDENTIFICADOR` a ADB. |
 | No conecta tras quitar y volver a poner el cable | Mantén el agente abierto y ejecuta `--repair-usb`; conserva el token y la grabación. |
 | La app abre pero no hay datos | Debe ejecutarse el agente en el computador; la app sola no mide ese equipo. Revisa su ventana y la conexión. |
-| Cierres deshabilitados | Usa agente 0.3.0, conexión activa y procesos no protegidos. Con un agente antiguo actualiza el ZIP. |
+| Cierres deshabilitados | Usa agente 0.4.0, conexión activa y procesos no protegidos. Con un agente antiguo actualiza el ZIP. |
 | Otro agente usa el historial / puerto ocupado | Detén la instancia anterior. No borres SQLite para desbloquearlo. |
 | APK incompatible | Este archivo es ARM64/API 24+. Compilar otra ABI si corresponde. |
 | Conflicto de firma al instalar | Usar APK con la misma firma de la instalación existente; conservar el error para revisarlo. |
@@ -362,12 +373,11 @@ Se usa localhost por USB; Wi-Fi/QR/TLS todavía no están habilitados.
 ## Estado y desarrollo
 
 GitHub Actions: [agente, arranque y paquetes aprobados en Windows y Mac](https://github.com/morpheomax/monitoreo_Fitflow/actions/runs/39180195390)
-para la revisión `d8780b0`. La prueba física USB en un Windows del usuario sigue
-pendiente; estos tests no reemplazan una sesión real con el teléfono.
+para la revisión `d8780b0`. El usuario confirmó instalación y funcionamiento básico en Windows; faltan la
+conexión rápida nueva y las pruebas prolongadas.
 
 Probado con Mac y Samsung físico: panel horizontal, temas, gráficas, sesiones,
-informes/CSV, reconexión y cierre por PID con protección. **Windows físico,
-sesiones de 1–2 horas y consumo prolongado siguen pendientes**. El paquete
+informes/CSV, reconexión y cierre por PID con protección. **La conexión rápida nueva en Windows, sesiones de 1–2 horas y consumo prolongado siguen pendientes**. El paquete
 simplifica el arranque, pero todavía requiere Python y Platform-Tools externos.
 
 Los entregables se regeneran desde la raíz de PC Monitor con

@@ -217,3 +217,22 @@
   excluyendo builds, SDK, venv, claves y datos. Esto permite Download ZIP con APK
   sin necesitar Flutter en Windows. Tradeoff: el APK aumenta el historial Git;
   Releases puede sustituirlo al incorporar firma y distribución públicas.
+
+## D-018 — Transferencia USB temporal y confirmación del equipo
+
+- **Fecha:** 2026-10-18. Aceptada a petición del usuario; ajusta D-007/D-015.
+- **Decisión:** lanzador 0.4.0 abre explícitamente la actividad Android 0.7.0
+  mediante ADB. Un nonce aleatorio de 256 bits permite recoger una sola vez el
+  token mediante HTTP en loopback y un reenvío USB temporal, con caducidad de 90 s.
+  El Intent no contiene el token. Sin cuentas, credenciales persistentes ni red LAN.
+- **Validación:** Android admite únicamente localhost literal/puertos válidos,
+  versión v1, nonce/ruta exactos, sin redirecciones; tamaño/tiempo acotados.
+  El usuario confirma nombre y SO del equipo antes de conectar. El WebSocket
+  conserva la autenticación existente. Cancelar no reemplaza la conexión actual.
+- **Tradeoff:** depende de autorización ADB y de actualizar app/lanzador. Nombre
+  y SO son datos declarados por el equipo, no una identidad criptográfica. Un
+  equipo con depuración autorizada ya tiene acceso ADB al teléfono. No se ofrece
+  confianza permanente ni conexión desatendida. Conexión manual como alternativa.
+- **Límites:** el listener temporal se cierra al vencer o detener el lanzador;
+  se retira su reenvío al detenerlo. Reparar USB conserva el token actual sin
+  volver a emitirlo. No cambia la política de cierre de procesos ni sesiones.

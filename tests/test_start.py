@@ -1,10 +1,80 @@
 import unittest
+import json
+import urllib.error
+import urllib.request
 from unittest.mock import patch
 
-from start import find_adb, main, select_device
+from start import UsbPairing, find_adb, main, select_device
 
 
 class UsbStartupTest(unittest.TestCase):
+    def test_manual_mode_and_usb_failure_keep_manual_agent_available(self):
+        for manual in [False, True]:
+            with self.subTest(manual=manual), \
+                 patch("sys.argv", ["start.py"] + (["--manual-connection"] if manual else [])), \
+                 patch("start.find_adb", return_value="adb"), \
+                 patch("start.run_command", side_effect=["phone\tdevice", ""]), \
+                 patch("start.environment_python", return_value="python"), \
+                 patch("start.UsbPairing") as pairing, \
+                 patch("start.subprocess.Popen") as launch, patch("builtins.print"):
+                pairing.return_value.launch.side_effect = RuntimeError("Old APK")
+                launch.return_value.__enter__.return_value.wait.return_value = 0
+                self.assertEqual(main(), 0)
+                if manual:
+                    pairing.assert_not_called()
+                else:
+                    pairing.return_value.close.assert_called_once_with("adb", "phone")
+                self.assertNotIn("PCMONITOR_TOKEN", " ".join(launch.call_args.args[0]))
+                self.assertTrue(launch.call_args.kwargs['env']['PCMONITOR_TOKEN'])
+
+    def test_pairing_requires_nonce_expires_and_is_single_use(self):
+        pairing = UsbPairing("test-ephemeral-credential", 8766)
+        pairing.thread.start()
+        try:
+            base = f"http://127.0.0.1:{pairing.port}"
+            with self.assertRaises(urllib.error.HTTPError) as invalid:
+                urllib.request.urlopen(base + "/pair/wrong", timeout=3)
+            self.assertEqual(invalid.exception.code, 410)
+            with urllib.request.urlopen(base + pairing.path, timeout=3) as response:
+                self.assertEqual(response.headers['Cache-Control'], 'no-store')
+                data = json.load(response)
+            self.assertEqual(data['v'], 1)
+            self.assertEqual(data['token'], "test-ephemeral-credential")
+            self.assertEqual(data['url'], "ws://127.0.0.1:8766")
+            self.assertEqual(pairing.payload, {})
+            with self.assertRaises(urllib.error.HTTPError) as replay:
+                urllib.request.urlopen(base + pairing.path, timeout=3)
+            self.assertEqual(replay.exception.code, 410)
+        finally:
+            with patch("start.run_command"):
+                pairing.close("adb", "phone")
+
+    def test_expired_pairing_does_not_disclose_credentials(self):
+        pairing = UsbPairing("test-expired-credential", 8765, lifetime=-1)
+        pairing.thread.start()
+        try:
+            pairing.thread.join(timeout=2)
+            self.assertFalse(pairing.thread.is_alive())
+            self.assertEqual(pairing.payload, {})
+            with self.assertRaises(urllib.error.URLError):
+                urllib.request.urlopen(f"http://127.0.0.1:{pairing.port}{pairing.path}", timeout=3)
+        finally:
+            with patch("start.run_command"):
+                pairing.close("adb", "phone")
+
+    def test_activity_arguments_never_contain_agent_token(self):
+        pairing = UsbPairing("test-not-in-arguments", 8765)
+        try:
+            with patch("start.run_command", return_value="") as command:
+                pairing.launch("adb", "phone")
+            activity = command.call_args.args[0]
+            self.assertNotIn("test-not-in-arguments", " ".join(activity))
+            self.assertIn("com.innextsolutions.pcmonitor/.MainActivity", activity)
+            self.assertIn(f"http://127.0.0.1:{pairing.port}{pairing.path}", activity)
+        finally:
+            with patch("start.run_command"):
+                pairing.close("adb", "phone")
+
     def test_repair_usb_preserves_agent_without_preparing_or_starting_another(self):
         with patch("sys.argv", ["start.py", "--repair-usb"]), \
              patch("start.find_adb", return_value="adb"), \

@@ -11,8 +11,10 @@ para Windows y Mac con entorno aislado, diagnóstico y reenvío USB.
 
 Para cerrar:
 - [x] Probar el nuevo lanzador en Mac con Android físico y reparación USB sin reinicio.
-- [ ] Copiar las fuentes a Windows, instalar Python y Platform-Tools, abrir el
+- [x] Copiar las fuentes a Windows, instalar Python y Platform-Tools, abrir el
   lanzador y ver CPU/RAM reales en el mismo teléfono, sin Flutter en Windows.
+  El usuario informó instalación y funcionamiento correctos el 2026-10-18.
+  La conexión rápida de 0.7.0/0.4.0 requiere una nueva prueba allí.
 - [ ] Medir CPU y RAM del agente en ambos sistemas durante 10 minutos en reposo
   y transmitiendo. Objetivo en reposo: <1 % CPU y <60 MB RAM.
 - [x] Separar el cliente WebSocket de la pantalla; reconexión con espera progresiva,
@@ -45,6 +47,12 @@ Diseño y criterios originales de aceptación:
 del registro, informe verificable y CSV que se puede abrir en Power BI.
 
 ## 3. Gestión segura de procesos — cierre individual implementado; aceptación Windows pendiente
+
+Siguiente mejora solicitada: **Cerrar aplicación completa** desde la tarjeta,
+con una confirmación, identidad de aplicación/relaciones y resultado por PID.
+Conservar protegidos, permisos, auditoría y validación de identidad. No cerrar por
+nombre ni prometer guardado automático: `terminate` en Windows es forzado.
+Todavía no implementado; la conexión rápida USB se completa primero.
 
 - [x] Agrupación con miembros PID/ruta/creación; el nombre agrupado es solo presentación.
 - [x] Módulo `actions/`: token, confirmación, PID + ejecutable + identidad temporal,

@@ -379,3 +379,33 @@ Estado final: Samsung en Panel, conectado a la Mac, tema oscuro, pantalla activa
 - Descarga limpia mediante git archive: APK/ZIP/guías correctos, package_release
   --check y start.py --help ejecutados sin app/build ni venv de Mac. APK instalado
   0.6.0+8 en Samsung. Panel final conectado, oscuro y sin grabación activa.
+
+
+## Sesión 14 — Conexión USB sin escribir token (2026-10-18)
+
+- Usuario confirmó instalación y funcionamiento básico en Windows. Se registra
+  como evidencia del usuario; no implica validación de sesiones largas/cierres.
+- App0.7.0+9 y paquete0.4.0: el lanzador abre Android por ADB; enlace nonce de
+  un uso permite recoger token por loopback/reverse, caduca en90s. Intent sin
+  token. Credenciales en memoria, no-store, sin logs ni archivos de credenciales.
+- Confirmación con nombre/SO, Conectar/Cancelar. Cancelar conserva la conexión
+  actual; cambiarla avisa que grabaciones siguen en el equipo anterior. Conexión
+  manual sigue disponible y --manual-connection evita apertura automática.
+- Canal nativo consume enlace tanto en apertura fría como onNewIntent. Flutter
+  valida versión/ruta/host/puerto/tamaño/timeout; no sigue redirecciones. D-018.
+- 29 tests Flutter, analyze limpio, 24 tests agente. Tests de arranque ampliados
+  para nonce, un uso, caducidad, token fuera de argumentos, cancelación/aceptación
+  en UI y funcionamiento manual ante fallo del emparejamiento.
+- Agente de desarrollo previo sin sesión activa, comprobado antes de reiniciar.
+  APK actualizado en Samsung mediante install-r; lanzador real envió conexión,
+  confirmación equipo/macOS observada y métricas reales recibidas sin escribir.
+  Segunda entrega con credencial desechable cancelada: conserva conexión real.
+- README, guías Windows/Mac, arquitectura, roadmap y contexto actualizados.
+  Próxima mejora solicitada: cerrar aplicación completa desde tarjeta, pendiente
+  de diseño/implementación segura; no se cambiaron señales ni protección por PID.
+
+- Validación final: 9 tests del lanzador pasan; ZIP común/Windows 0.4.0
+  regenerados con fuentes y guías idénticas, CRC y SHA-256 correctos.
+  App0.7.0+9 instalada; Samsung conectado con métricas reales, sin grabación.
+- La prueba de cancelación física usó credencial desechable: no envió acciones
+  ni reemplazó la conexión real. Agente anterior reiniciado sin perder sesiones.

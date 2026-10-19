@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../connection/monitor_controller.dart';
+import '../connection/usb_pairing.dart';
 import 'process_details_sheet.dart';
 import 'expanded_chart_page.dart';
 import '../widgets/metric_chart.dart';
@@ -14,11 +15,13 @@ class DashboardPage extends StatefulWidget {
   const DashboardPage(
       {super.key,
       this.controller,
+      this.pairingLoader = fetchUsbCredentials,
       this.themeMode = ThemeMode.system,
       this.onThemeChanged});
   final ThemeMode themeMode;
   final ValueChanged<ThemeMode>? onThemeChanged;
   final MonitorController? controller;
+  final Future<UsbCredentials> Function(String) pairingLoader;
   @override
   State<DashboardPage> createState() => _DashboardPageState();
 }
@@ -29,6 +32,9 @@ class _DashboardPageState extends State<DashboardPage>
   final _token = TextEditingController();
   final _url = TextEditingController(text: 'ws://127.0.0.1:8765');
   static const _panelChannel = MethodChannel('pcmonitor/panel');
+  static const _pairingChannel = MethodChannel('pcmonitor/pairing');
+  bool _pairingBusy = false;
+  bool _pairingAgain = false;
   int _tab = 0;
   Duration _chartWindow = const Duration(minutes: 1);
   bool _busy = false;
@@ -45,6 +51,62 @@ class _DashboardPageState extends State<DashboardPage>
     monitor = widget.controller ?? MonitorController();
     monitor.addListener(_changed);
     WidgetsBinding.instance.addObserver(this);
+    _pairingChannel.setMethodCallHandler((call) async {
+      if (call.method == 'available') await _receiveUsbPairing();
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _receiveUsbPairing());
+  }
+
+  Future<void> _receiveUsbPairing() async {
+    if (!mounted) return;
+    if (_pairingBusy) {
+      _pairingAgain = true;
+      return;
+    }
+    _pairingBusy = true;
+    try {
+      final link = await _pairingChannel.invokeMethod<String>('consume');
+      if (link == null || !mounted) return;
+      final credentials = await widget.pairingLoader(link);
+      if (!mounted) return;
+      final accepted = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Conectar por USB'),
+          content: Text('${credentials.host}\n${credentials.os}\n\n'
+              'Comprueba que es el computador conectado. Podrás ver sus métricas '
+              'y cerrar procesos permitidos, con confirmación. '
+              'El token se recibió por USB y no se guardará.'
+              '${monitor.running ? '\n\nSe reemplazará la conexión actual; una grabación seguirá en su computador.' : ''}'),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancelar')),
+            FilledButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('Conectar')),
+          ],
+        ),
+      );
+      if (!mounted || accepted != true) return;
+      _url.text = credentials.url;
+      _token.clear();
+      monitor.connect(credentials.url, credentials.token);
+    } on MissingPluginException {
+      // Tests y otras plataformas mantienen conexión manual.
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('No se pudo recibir la conexión USB. Reinicia el '
+                'lanzador o usa el token manual.')));
+      }
+    } finally {
+      _pairingBusy = false;
+      if (_pairingAgain && mounted) {
+        _pairingAgain = false;
+        unawaited(_receiveUsbPairing());
+      }
+    }
   }
 
   void _changed() {
@@ -71,6 +133,7 @@ class _DashboardPageState extends State<DashboardPage>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     monitor.removeListener(_changed);
+    _pairingChannel.setMethodCallHandler(null);
     if (widget.controller == null) monitor.dispose();
     _panelChannel
         .invokeMethod<void>('keepScreenOn', false)

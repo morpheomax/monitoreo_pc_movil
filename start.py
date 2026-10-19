@@ -3,16 +3,90 @@
 
 import argparse
 import hashlib
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import json
 import os
 from pathlib import Path
+import platform
 import secrets
 import shutil
 import subprocess
 import sys
+import threading
+import time
 import venv
 
 ROOT = Path(__file__).resolve().parent
 AGENT = ROOT / "agent"
+
+
+class UsbPairing:
+    """Entrega de un uso; el Intent contiene un nonce, nunca el token del agente."""
+
+    def __init__(self, token, port, lifetime=90):
+        self.deadline = time.monotonic() + lifetime
+        self.path = "/pair/" + secrets.token_urlsafe(32)
+        self.payload = {"v": 1, "url": f"ws://127.0.0.1:{port}", "token": token,
+                        "host": platform.node(), "os": platform.system()}
+        self.used = False
+        self.stop = threading.Event()
+        pairing = self
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                valid = (time.monotonic() < pairing.deadline and not pairing.used
+                         and secrets.compare_digest(self.path.encode(), pairing.path.encode()))
+                body = json.dumps(pairing.payload if valid else {"v": 1, "error": "expired"}).encode()
+                if valid:
+                    pairing.used = True
+                    pairing.payload = {}  # Retirar la copia tras consumirla.
+                self.send_response(200 if valid else 410)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Cache-Control", "no-store")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, *_args):
+                pass  # No registrar nonce, URL ni credenciales.
+
+            def setup(self):
+                super().setup()
+                self.connection.settimeout(2)
+
+        self.server = HTTPServer(("127.0.0.1", 0), Handler)
+        self.server.timeout = 0.5
+        self.port = self.server.server_port
+        self.thread = threading.Thread(target=self._serve, daemon=True)
+
+    def _serve(self):
+        try:
+            while not self.stop.is_set() and time.monotonic() < self.deadline:
+                self.server.handle_request()
+        finally:
+            self.payload = {}
+            self.server.server_close()
+
+    def launch(self, adb, serial):
+        self.thread.start()
+        run_command([adb, "-s", serial, "reverse", f"tcp:{self.port}", f"tcp:{self.port}"])
+        result = run_command([adb, "-s", serial, "shell", "am", "start", "-W",
+                              "-n", "com.innextsolutions.pcmonitor/.MainActivity",
+                              "--es", "pcmonitor_pairing",
+                              f"http://127.0.0.1:{self.port}{self.path}"])
+        if "Error" in result or "Exception" in result:
+            raise RuntimeError("Android no pudo abrir PC Monitor. Actualiza el APK.")
+
+    def close(self, adb, serial):
+        self.stop.set()
+        if self.thread.is_alive():
+            self.thread.join(timeout=3)
+        else:
+            self.server.server_close()
+        try:
+            run_command([adb, "-s", serial, "reverse", "--remove", f"tcp:{self.port}"])
+        except (RuntimeError, OSError, subprocess.SubprocessError):
+            pass  # Desconectar USB no debe impedir detener el agente.
 
 
 def find_adb(explicit=None):
@@ -90,6 +164,7 @@ def main():
     parser.add_argument("--serial", help="Dispositivo Android si hay varios conectados")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--token", help="Token opcional; por defecto se genera uno temporal")
+    parser.add_argument("--manual-connection", action="store_true", help="No abrir Android ni transferir el token por USB")
     args = parser.parse_args()
     if sys.version_info < (3, 11):
         parser.error("Se necesita Python 3.11 o posterior.")
@@ -112,10 +187,33 @@ def main():
             return 0
         python = environment_python()
         token = args.token or secrets.token_urlsafe(12)
-        print(f"\nAbre PC Monitor en Android:\n  URL: ws://127.0.0.1:{args.port}\n  Token: {token}\nPulsa Conectar. Mantén esta ventana abierta.\n", flush=True)
+        print(f"\nPC Monitor en Android:\n  URL: ws://127.0.0.1:{args.port}\n  Token: {token}\nSi no aparece la conexión rápida, usa estos datos en Panel. Mantén esta ventana abierta.\n", flush=True)
         # El token viaja por el entorno para que no aparezca en la lista de procesos.
         environment = dict(os.environ, PCMONITOR_TOKEN=token, PYTHONUNBUFFERED="1")
-        return subprocess.call([str(python), str(AGENT / "server.py"), "--port", str(args.port)], env=environment, cwd=AGENT)
+        pairing = None
+        # Iniciar primero el agente: la pantalla de confirmación puede abrirse enseguida.
+        with subprocess.Popen([str(python), str(AGENT / "server.py"), "--port", str(args.port)],
+                              env=environment, cwd=AGENT) as process:
+            try:
+                if not args.manual_connection:
+                    try:
+                        pairing = UsbPairing(token, args.port)
+                        pairing.launch(adb, serial)
+                        print("Conexión enviada al teléfono. Revisa el equipo y pulsa Conectar (90 s).", flush=True)
+                    except (RuntimeError, OSError, subprocess.SubprocessError):
+                        print("No se pudo abrir la conexión rápida. Usa el token mostrado arriba y actualiza el APK si corresponde.", flush=True)
+                return process.wait()
+            except KeyboardInterrupt:
+                process.terminate()
+                try:
+                    process.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    process.wait()
+                raise
+            finally:
+                if pairing is not None:
+                    pairing.close(adb, serial)
     except (RuntimeError, OSError, subprocess.SubprocessError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1

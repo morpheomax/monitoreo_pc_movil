@@ -16,6 +16,6 @@ key.properties
 dist/*
 !dist/README.md
 !dist/SHA256SUMS.txt
-!dist/pcmonitor-android-0.6.0-arm64.apk
-!dist/pcmonitor-agent-0.3.0.zip
-!dist/pcmonitor-windows-agent-0.3.0.zip
+!dist/pcmonitor-android-0.7.0-arm64.apk
+!dist/pcmonitor-agent-0.4.0.zip
+!dist/pcmonitor-windows-agent-0.4.0.zip

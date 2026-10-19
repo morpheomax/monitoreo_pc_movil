@@ -16,6 +16,12 @@ agente usar Ctrl+C en su ventana del computador. No se envía un apagado remoto.
 
 ## Orden propuesto
 
+El usuario confirmó el uso básico en Windows con teléfono el 2026-10-18.
+Nuevo incremento: conexión rápida USB (app 0.7.0/lanzador 0.4.0), con confirmación
+de equipo/SO sin escribir token. Próxima mejora: cierre por aplicación completa
+desde la tarjeta, manteniendo validación por PID y procesos protegidos.
+Siguen pendientes sesión prolongada, consumo y cierres específicos en Windows.
+
 | Prioridad | Mejora pendiente | Beneficio y condición de aceptación |
 |---|---|---|
 | 1 | Validación Windows y sesión prolongada | Probar el mismo teléfono en Windows, 1–2 h de captura, reconexión y CSV; medir CPU/RAM del agente durante 10 min. Es el siguiente hito del núcleo. |
