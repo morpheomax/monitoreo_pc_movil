@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.command text eol=lf
+*.apk binary
+*.zip binary
+*.png binary
+*.ico binary
+*.icns binary

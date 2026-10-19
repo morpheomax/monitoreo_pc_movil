@@ -1,0 +1,21 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+*.sqlite*
+*.log
+platform-tools/
+exports/
+*.jks
+*.keystore
+key.properties
+# Solo entregables vigentes, sin versiones antiguas ni capturas locales.
+!dist/
+dist/*
+!dist/README.md
+!dist/SHA256SUMS.txt
+!dist/pcmonitor-android-0.6.0-arm64.apk
+!dist/pcmonitor-agent-0.3.0.zip
+!dist/pcmonitor-windows-agent-0.3.0.zip

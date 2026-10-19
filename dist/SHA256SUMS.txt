@@ -1,0 +1,3 @@
+0275baf01762b0fd70727eb63541808c04c7d85833840dbd292b2f3bfd8f2f56  pcmonitor-android-0.6.0-arm64.apk
+7b1fdb94863119af91d433203d8b3bc1775f3f773c928561e3ac7aa3f7471a97  pcmonitor-agent-0.3.0.zip
+56e240bb598419fd3e775f311bfa4fbe0a7af6fc313de061c57e3ea93a9b2072  pcmonitor-windows-agent-0.3.0.zip
